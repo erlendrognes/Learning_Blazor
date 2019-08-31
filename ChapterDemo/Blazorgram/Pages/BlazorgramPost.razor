@@ -1,0 +1,100 @@
+﻿@page "/blazorgram/post/{Id:int}"
+@using BlazorgramDemo.Models
+
+@inject HttpClient Http
+
+<div class="post-content">
+    <div class="post-image">
+        <h3>@activePost.Title</h3>
+        <MatCard class="demo-mat-card">
+            <MatCardContent>
+                <MatCardMedia Wide ImageUrl="@activePost.Image"></MatCardMedia>
+                <div class="demo-mat-card-content">
+                    <MatSubtitle2 class="demo-mat-card-clean-margin">
+                        by @activePost.User - <span>@activePost.Posted</span>
+                    </MatSubtitle2>
+                    <MatButton Outlined="true" OnClick="@IncrementLikes">
+                        <span class="oi oi-heart"></span> @activePost.LikeCount
+                    </MatButton>
+                </div>
+            </MatCardContent>
+        </MatCard>
+    </div>
+    <div class="post-comment">
+        @if (activePost.Comments?.Count > 0)
+        {
+            <MatList>
+                @foreach (var c in activePost.Comments)
+                {
+                    <div class="mb-2">
+                        <MatListItem>
+                            <MatListItemText>
+                                <MatListItemPrimaryText>@c.Content</MatListItemPrimaryText>
+                                <MatListItemSecondaryText>@c.Author</MatListItemSecondaryText>
+                            </MatListItemText>
+                        </MatListItem>
+                    </div>
+                }
+            </MatList>
+        }
+        <div class="comment">
+            <p>
+                <MatTextField @bind-Value="@user" Label="User"></MatTextField>
+            </p>
+            <p>
+                <MatTextField @bind-Value="@comment" Label="Comments"></MatTextField>
+            </p>
+            <MatButton Unelevated="true" OnClick="@AddComment"><span class="oi oi-arrow-circle-right"></span></MatButton>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private Post activePost = new Post();
+    private string user;
+    private string comment;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    void AddComment()
+    {
+        activePost.Comments.Add(new Comment
+        {
+            Author = user,
+            Content = comment
+        });
+        user = string.Empty;
+        comment = string.Empty;
+    }
+
+    void IncrementLikes()
+    {
+        activePost.LikeCount++;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var all = await Http.GetJsonAsync<Post[]>("sample-data/blazorgram_posts.json");
+        activePost = all.FirstOrDefault(p => p.Id == Id);
+    }
+}
+
+<style>
+    .post-content {
+        width: 60vw;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .post-comment {
+        display: inline-block;
+        width: 30%;
+    }
+
+    .post-image {
+        display: inline-block;
+        width: 69%;
+    }
+</style>

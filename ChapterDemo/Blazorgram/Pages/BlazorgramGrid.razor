@@ -1,0 +1,35 @@
+﻿@using BlazorgramDemo.Models
+@inject IUriHelper UriHelper
+
+
+<MatCardMedia Wide ImageUrl="@Post.Image"></MatCardMedia>
+<div class="demo-mat-card-content">
+    <MatHeadline6 class="demo-mat-card-clean-margin">
+        @Post.Title
+    </MatHeadline6>
+    <MatSubtitle2 class="demo-mat-card-clean-margin">
+        by @Post.User - <span>@Post.Posted</span>
+    </MatSubtitle2>
+    <MatButton Outlined="true" OnClick="@IncrementLikes">
+        <span class="oi oi-heart"></span> @Post.LikeCount
+    </MatButton>
+    <MatButton Outlined="true" OnClick="@NavigateToPost">
+        <span class="oi oi-comment-square"></span> @(Post.Comments?.Count ?? 0)
+    </MatButton>
+</div>
+
+@code {
+    [Parameter]
+    public Post Post { get; set; }
+
+    void IncrementLikes()
+    {
+        Console.WriteLine(Post);
+        Post.LikeCount++;
+    }
+
+    void NavigateToPost()
+    {
+        UriHelper.NavigateTo($"/blazorgram/post/{Post.Id}");
+    }
+}

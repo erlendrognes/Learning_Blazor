@@ -1,0 +1,66 @@
+﻿@page "/blazorgram"
+@using BlazorgramDemo.Data
+@using BlazorgramDemo.Models
+@inject HttpClient Http
+
+<h1>Blazorgram</h1>
+
+@if (posts == null)
+{
+    <MatProgressBar Indeterminate="true"></MatProgressBar>
+}
+else
+{
+    <div class="grid-container">
+        @foreach (var post in posts)
+        {
+            @if (post.Id > 0)
+            {
+
+                <div class="grid-item">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <BlazorgramGrid Post="@post"/>
+                        </MatCardContent>
+                    </MatCard>
+                </div>
+            }
+        }
+    </div>
+}
+
+@code {
+    Post[] posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await PostService.GetDataFromTheAmazingStaticServer();
+    }
+}
+
+<style>
+    .demo-mat-card {
+        max-width: 400px;
+    }
+
+    .demo-mat-card-content {
+        padding: 1rem;
+    }
+
+    .demo-mat-card-clean-margin {
+        margin: 0px;
+    }
+
+    .grid-container {
+        display: grid;
+        margin: auto;
+        grid-template-columns: auto auto auto;
+        padding: 10px;
+    }
+
+    .grid-item {
+        padding: 5px;
+        font-size: 30px;
+        text-align: center;
+    }
+</style>
