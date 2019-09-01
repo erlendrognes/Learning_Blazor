@@ -1,15 +1,42 @@
-﻿@inherits LayoutComponentBase
-
-<div class="sidebar">
-    <NavMenu />
-</div>
+﻿@inject IUriHelper UriHelper
+@inherits LayoutComponentBase
 
 <div class="main">
     <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+        <div @onclick="Home" class="blazorgram-header">
+            <h1>Blazorgram</h1>
+            @*<AuthorizeView>
+            <Authorized>
+                <i class="oi oi-account-logout"></i>
+                <span>Hello, <strong>@context.User.Identity.Name</strong></span>
+                <MatButton OnClick="@loginDialog.Logout">Log out</MatButton>
+            </Authorized>
+        </AuthorizeView>*@
+        </div>
     </div>
-
-    <div class="content px-4">
-        @Body
+    <div>
+        @*<AuthorizeView>
+            <Authorized>*@
+        <div class="content px-4">
+            @Body
+        </div>
+        @*</Authorized>
+                <NotAuthorized>
+                    <Login @ref="loginDialog" />
+                </NotAuthorized>
+            </AuthorizeView>*@
     </div>
 </div>
+
+@*<Login @ref="logindialog" />*@
+
+
+@code {
+
+    //LoginDialog loginDialog;
+
+    void Home()
+    {
+        UriHelper.NavigateTo("/");
+    }
+}

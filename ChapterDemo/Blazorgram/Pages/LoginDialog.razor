@@ -1,0 +1,43 @@
+﻿@*@using BlazorgramDemo.Data
+@using BlazorgramDemo.Models
+@inject HttpClient Http
+@inject TokenAuthenticationStateProvider  AuthStateProvider
+
+<MatDialog @bind -IsOpen="@dialogOpen">
+    <MatDialogTitle>Log in</MatDialogTitle>
+    <MatDialogContent>
+        <MatTextField @bind-Value="@userName" Required="true" HelperText="Username" Label="Username"></MatTextField>
+        <MatTextField @bind-Value="@password" Required="true" Type="password" HelperText="Password" Label="Password"></MatTextField>
+    </MatDialogContent>
+    <MatDialogActions>
+        <MatButton OnClick="SubmitLogin">Log in</MatButton>
+    </MatDialogActions>
+</MatDialog>
+
+
+@code {
+
+    LoginCredentials loginCredentials = new LoginCredentials();
+    bool dialogOpen = false;
+    string userName;
+    string password;
+
+    void OpenDialog()
+    {
+        dialogOpen = true;
+    }
+
+    AuthorizationService _authService = new AuthorizationService();
+
+    async Task SubmitLogin()
+    {
+        
+         _authService.Login();
+    }
+
+    async  Task Logout()
+    {
+        _authService.LogOut();
+    }
+
+}*@

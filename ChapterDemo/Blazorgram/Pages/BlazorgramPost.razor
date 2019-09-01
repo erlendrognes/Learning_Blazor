@@ -77,23 +77,5 @@
     protected override async Task OnInitializedAsync()
     {
         activePost = await PostService.GetPost(Id);
-    }   
+    }
 }
-
-<style>
-    .post-content {
-        width: 60vw;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    .post-comment {
-        display: inline-block;
-        width: 30%;
-    }
-
-    .post-image {
-        display: inline-block;
-        width: 69%;
-    }
-</style>
