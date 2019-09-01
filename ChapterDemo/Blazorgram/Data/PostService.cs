@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BlazorgramDemo.Models;
 
@@ -14,7 +15,17 @@ namespace BlazorgramDemo.Data
 
         public static Task<Post[]> GetDataFromTheAmazingStaticServer()
         {
-            return Task.FromResult(new [] 
+            return Task.FromResult(Posts().ToArray());
+        }
+
+        public static Task<Post> GetPost(int id)
+        {
+            return Task.FromResult(Posts().FirstOrDefault(p => p.Id == id));
+        }
+
+        public static List<Post> Posts()
+        {
+            return new List<Post>
             {
                 new Post
                 {
@@ -92,7 +103,8 @@ namespace BlazorgramDemo.Data
                     Title = "Run forest run",
                     User = "Team Ingebreigsten",
                     Comments = null,
-                    Image = "https://d2z0k43lzfi12d.cloudfront.net/blog/vcdn271/wp-content/uploads/2018/04/thumbnail_8-tips-beginner_1200x800-1024x683.jpg",
+                    Image =
+                        "https://d2z0k43lzfi12d.cloudfront.net/blog/vcdn271/wp-content/uploads/2018/04/thumbnail_8-tips-beginner_1200x800-1024x683.jpg",
                     LikeCount = 19
                 },
                 new Post
@@ -109,10 +121,11 @@ namespace BlazorgramDemo.Data
                             Content = "Not for sale",
                         }
                     },
-                    Image = "https://i2.wp.com/www.occidentaldissent.com/wp-content/uploads/2019/08/ECJCSJtUwAA87nM.jpeg?resize=559%2C381",
+                    Image =
+                        "https://i2.wp.com/www.occidentaldissent.com/wp-content/uploads/2019/08/ECJCSJtUwAA87nM.jpeg?resize=559%2C381",
                     LikeCount = 52
                 }
-            });
+            };
         }
     }
 }

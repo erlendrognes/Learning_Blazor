@@ -76,7 +76,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var all = await Http.GetJsonAsync<Post[]>("sample-data/blazorgram_posts.json");
+        var all = await Http.GetJsonAsync<Post[]>
+    ("sample-data/blazorgram_posts.json");
         activePost = all.FirstOrDefault(p => p.Id == Id);
     }
 }
