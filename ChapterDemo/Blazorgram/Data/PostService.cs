@@ -10,7 +10,7 @@ namespace BlazorgramDemo.Data
     {
         public static async Task<Post[]> GetData()
         {
-            return await GetDataFromTheAmazingStaticServer(); //Http.GetJsonAsync<Post[]>("sample-data/blazorgram_posts.json");
+            return await GetDataFromTheAmazingStaticServer(); 
         }
 
         public static Task<Post[]> GetDataFromTheAmazingStaticServer()

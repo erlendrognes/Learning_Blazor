@@ -1,7 +1,7 @@
 ﻿@page "/blazorgram/post/{Id:int}"
+@using BlazorgramDemo.Data
 @using BlazorgramDemo.Models
 
-@inject HttpClient Http
 
 <div class="post-content">
     <div class="post-image">
@@ -76,10 +76,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var all = await Http.GetJsonAsync<Post[]>
-    ("sample-data/blazorgram_posts.json");
-        activePost = all.FirstOrDefault(p => p.Id == Id);
-    }
+        activePost = await PostService.GetPost(Id);
+    }   
 }
 
 <style>

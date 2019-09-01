@@ -1,6 +1,7 @@
 ﻿@page "/todo"
 
 <h1>Todo (@todos.Count(todo => !todo.Done))</h1>
+
 <input placeholder="What todo?" @bind="newTodo" />
 <button @onclick="AddTodo">Add todo</button>
 
@@ -16,8 +17,7 @@
 <h4>Count = @todos.Count(t => !t.Done)</h4>
 
 @code {
-    private IList<TodoItem>
-    todos = new List<TodoItem>();
+    private IList<TodoItem> todos = new List<TodoItem>();
     private string newTodo;
 
     private void AddTodo()
